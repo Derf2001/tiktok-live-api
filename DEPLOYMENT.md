@@ -23,8 +23,8 @@ git commit -m "🎉 Initial commit - TikTok Live Dashboard"
 
 ### 3. 📤 Subir archivos a GitHub
 ```bash
-# Conectar con tu repositorio (reemplaza TU-USUARIO)
-git remote add origin https://github.com/TU-USUARIO/tiktok-live-api.git
+# Conectar con tu repositorio
+git remote add origin https://github.com/derf2001/tiktok-live-api.git
 git branch -M main
 git push -u origin main
 ```
@@ -39,32 +39,32 @@ git push -u origin main
 
 ### 5. 🎯 URLs que obtendrás
 Después de activar GitHub Pages, tendrás:
-- **Dashboard principal:** https://TU-USUARIO.github.io/tiktok-live-api/
-- **Callback OAuth:** https://TU-USUARIO.github.io/tiktok-live-api/callback.html
-- **Políticas:** https://TU-USUARIO.github.io/tiktok-live-api/privacy.html
+- **Dashboard principal:** https://derf2001.github.io/tiktok-live-api/
+- **Callback OAuth:** https://derf2001.github.io/tiktok-live-api/callback.html
+- **Políticas:** https://derf2001.github.io/tiktok-live-api/privacy.html
 
 ### 6. 🔧 Configurar TikTok Developers
 Ve a https://developers.tiktok.com/ y actualiza tu aplicación con:
 
 **Redirect URI:**
 ```
-https://TU-USUARIO.github.io/tiktok-live-api/callback.html
+https://derf2001.github.io/tiktok-live-api/callback.html
 ```
 
 **Privacy Policy URL:**
 ```
-https://TU-USUARIO.github.io/tiktok-live-api/privacy.html
+https://derf2001.github.io/tiktok-live-api/privacy.html
 ```
 
 **Terms of Service URL:**
 ```
-https://TU-USUARIO.github.io/tiktok-live-api/terms.html
+https://derf2001.github.io/tiktok-live-api/terms.html
 ```
 
 ### 7. 📝 Actualizar configuración
 Edita el archivo `config.js` con tu URL real:
 ```javascript
-REDIRECT_URI: 'https://TU-USUARIO.github.io/tiktok-live-api/callback.html'
+REDIRECT_URI: 'https://derf2001.github.io/tiktok-live-api/callback.html'
 ```
 
 ### 8. 🔄 Actualizar cambios
@@ -78,7 +78,7 @@ git push
 ## ⚡ ¡Ya está listo!
 
 Tu dashboard estará disponible en:
-**https://TU-USUARIO.github.io/tiktok-live-api/**
+**https://derf2001.github.io/tiktok-live-api/**
 
 ## 🎯 Ventajas de GitHub Pages:
 ✅ Gratuito
