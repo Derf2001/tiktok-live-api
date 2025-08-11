@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔥 TikTok Live Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔥</text></svg>">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <h1>🔥 TikTok Live Dashboard</h1>
+                <p>Estadísticas en tiempo real</p>
+            </div>
+            <div class="auth-section">
+                <div id="auth-status" class="auth-status">
+                    <span id="status-text">No autorizado</span>
+                    <button id="auth-button" class="auth-button">🔐 Autorizar con TikTok</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="dashboard">
+            <div class="stats-grid">
+                <div class="stat-card viewers">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="viewers-count">0</div>
+                        <div class="stat-label">Espectadores</div>
+                    </div>
+                </div>
+
+                <div class="stat-card likes">
+                    <div class="stat-icon">❤️</div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="likes-count">0</div>
+                        <div class="stat-label">Likes</div>
+                    </div>
+                </div>
+
+                <div class="stat-card follows">
+                    <div class="stat-icon">➕</div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="follows-count">0</div>
+                        <div class="stat-label">Seguidores</div>
+                    </div>
+                </div>
+
+                <div class="stat-card shares">
+                    <div class="stat-icon">📤</div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="shares-count">0</div>
+                        <div class="stat-label">Compartidos</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-grid">
+                <div class="comments-section">
+                    <h3>💬 Comentarios Recientes</h3>
+                    <div id="comments-list" class="comments-list">
+                        <div class="no-data">Esperando comentarios...</div>
+                    </div>
+                </div>
+
+                <div class="user-info-section">
+                    <h3>👤 Información del Usuario</h3>
+                    <div id="user-info" class="user-info">
+                        <div class="no-data">Autoriza para ver tu información</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Alert overlay -->
+        <div id="alert-overlay" class="alert-overlay">
+            <div class="alert-content">
+                <div id="alert-text" class="alert-text"></div>
+            </div>
+        </div>
+
+        <!-- Loading overlay -->
+        <div id="loading-overlay" class="loading-overlay">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">Conectando con TikTok...</div>
+        </div>
+    </div>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>

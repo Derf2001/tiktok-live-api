@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎯 TikTok Live - Alternativa Simple</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #ff0050 0%, #ff6b6b 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        .container {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .problem {
+            background: rgba(255,255,0,0.2);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #ffeb3b;
+        }
+        .solution {
+            background: rgba(0,255,0,0.2);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #4caf50;
+        }
+        .option {
+            background: rgba(0,0,0,0.2);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+        button {
+            background: #00f2ea;
+            color: #1a1a1a;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            margin: 10px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            background: #00d4cc;
+            transform: translateY(-2px);
+        }
+        .code {
+            background: rgba(0,0,0,0.4);
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-family: monospace;
+        }
+        .steps {
+            background: rgba(255,255,255,0.05);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .steps ol li {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Problema con TikTok API Oficial</h1>
+        
+        <div class="problem">
+            <h3>❌ ¿Por qué aparece "Something went wrong"?</h3>
+            <ul>
+                <li><strong>URL de redirección:</strong> Debe estar registrada exactamente igual en TikTok Developers</li>
+                <li><strong>Dominio:</strong> TikTok solo permite dominios registrados (no localhost)</li>
+                <li><strong>Aplicación:</strong> Debe estar aprobada por TikTok</li>
+                <li><strong>Scopes:</strong> Los permisos deben coincidir exactamente</li>
+            </ul>
+        </div>
+
+        <div class="solution">
+            <h3>✅ Soluciones Recomendadas:</h3>
+        </div>
+
+        <div class="option">
+            <h4>🚀 Opción 1: Usar librería Python no oficial (RECOMENDADO)</h4>
+            <p>Esta opción es más fácil y funciona inmediatamente sin necesidad de registro en TikTok Developers.</p>
+            <button onclick="showPythonSolution()">📋 Ver instrucciones Python</button>
+        </div>
+
+        <div class="option">
+            <h4>🌐 Opción 2: Configurar dominio real</h4>
+            <p>Para usar el API oficial, necesitas un dominio real (no localhost).</p>
+            <button onclick="showDomainSolution()">🔧 Ver configuración de dominio</button>
+        </div>
+
+        <div class="option">
+            <h4>🧪 Opción 3: Usar simulador de datos</h4>
+            <p>Para desarrollo y pruebas, podemos simular datos de TikTok Live.</p>
+            <button onclick="showSimulator()">🎮 Ver simulador</button>
+        </div>
+
+        <div id="solutionDetails" class="steps" style="display: none;">
+            <!-- Las soluciones aparecerán aquí -->
+        </div>
+    </div>
+
+    <script>
+        function showPythonSolution() {
+            document.getElementById('solutionDetails').innerHTML = `
+                <h3>🐍 Solución con Python (Más fácil)</h3>
+                <p>Esta solución funciona inmediatamente sin configuración compleja:</p>
+                
+                <div class="code">
+                    <strong>1. Instalar la librería:</strong><br>
+                    pip install TikTokLive
+                </div>
+                
+                <div class="code">
+                    <strong>2. Ejecutar el bot:</strong><br>
+                    python tiktok_live_bot.py
+                </div>
+                
+                <div class="code">
+                    <strong>3. Abrir el dashboard:</strong><br>
+                    Abre tiktok_live_dashboard.html en tu navegador
+                </div>
+                
+                <h4>✅ Ventajas:</h4>
+                <ul>
+                    <li>No necesita registro en TikTok Developers</li>
+                    <li>Funciona inmediatamente</li>
+                    <li>Datos en tiempo real</li>
+                    <li>Fácil de configurar</li>
+                </ul>
+                
+                <h4>📝 Solo necesitas:</h4>
+                <ol>
+                    <li>Editar <strong>tiktok_config.json</strong> y poner tu username de TikTok</li>
+                    <li>Ejecutar el script de Python</li>
+                    <li>Iniciar tu live en TikTok</li>
+                    <li>Ver los datos en tiempo real</li>
+                </ol>
+            `;
+            document.getElementById('solutionDetails').style.display = 'block';
+        }
+        
+        function showDomainSolution() {
+            document.getElementById('solutionDetails').innerHTML = `
+                <h3>🌐 Configurar Dominio Real</h3>
+                <p>Para usar el API oficial de TikTok, necesitas:</p>
+                
+                <h4>📋 Pasos requeridos:</h4>
+                <ol>
+                    <li><strong>Obtener un dominio:</strong> Comprar o usar un subdominio gratuito</li>
+                    <li><strong>Configurar HTTPS:</strong> TikTok requiere SSL</li>
+                    <li><strong>Registrar en TikTok Developers:</strong> Aprobar tu aplicación</li>
+                    <li><strong>Configurar redirects:</strong> URLs exactas</li>
+                </ol>
+                
+                <h4>🆓 Opciones de dominio gratuito:</h4>
+                <ul>
+                    <li><strong>Ngrok:</strong> Para tunnel a localhost</li>
+                    <li><strong>Vercel/Netlify:</strong> Para hosting gratuito</li>
+                    <li><strong>GitHub Pages:</strong> Con dominio personalizado</li>
+                </ul>
+                
+                <div class="code">
+                    <strong>Ejemplo con ngrok:</strong><br>
+                    1. Instala ngrok<br>
+                    2. ngrok http 8001<br>
+                    3. Usa la URL https://xxxxx.ngrok.io en TikTok Developers
+                </div>
+                
+                <p><strong>⚠️ Nota:</strong> Este proceso puede tomar días para ser aprobado por TikTok.</p>
+            `;
+            document.getElementById('solutionDetails').style.display = 'block';
+        }
+        
+        function showSimulator() {
+            document.getElementById('solutionDetails').innerHTML = `
+                <h3>🎮 Simulador de Datos TikTok Live</h3>
+                <p>Para desarrollo y pruebas, podemos crear un simulador que genere datos realistas:</p>
+                
+                <h4>🎯 Funcionalidades del simulador:</h4>
+                <ul>
+                    <li>Genera viewers aleatorios (50-500)</li>
+                    <li>Incrementa likes automáticamente</li>
+                    <li>Simula nuevos seguidores</li>
+                    <li>Crea comentarios ficticios</li>
+                    <li>Actualización en tiempo real</li>
+                </ul>
+                
+                <h4>📝 Cómo usarlo:</h4>
+                <ol>
+                    <li>El simulador ya está en tu <strong>tiktok_api_server.php</strong></li>
+                    <li>Accede a: <code>http://localhost:8001/tiktok_api_server.php?action=live</code></li>
+                    <li>Usa esos datos en tu dashboard HTML</li>
+                    <li>Perfecto para desarrollar y probar tu interfaz</li>
+                </ol>
+                
+                <button onclick="testSimulator()" style="background: #4CAF50; margin-top: 15px;">🧪 Probar Simulador</button>
+                
+                <div id="simulatorResults" style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 5px; margin-top: 15px; display: none;">
+                </div>
+            `;
+            document.getElementById('solutionDetails').style.display = 'block';
+        }
+        
+        function testSimulator() {
+            document.getElementById('simulatorResults').style.display = 'block';
+            document.getElementById('simulatorResults').textContent = 'Cargando...';
+            
+            fetch('tiktok_api_server.php?action=live')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('simulatorResults').innerHTML = 
+                        '<strong>🎉 Datos del simulador:</strong><br><pre>' + 
+                        JSON.stringify(data, null, 2) + '</pre>';
+                })
+                .catch(error => {
+                    document.getElementById('simulatorResults').textContent = 
+                        'Error: ' + error + '\n\nAsegúrate de que el servidor PHP esté funcionando.';
+                });
+        }
+    </script>
+</body>
+</html>

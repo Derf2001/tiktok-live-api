@@ -1,0 +1,28 @@
+# Archivos de desarrollo local
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
+
+# Archivos PHP (no necesarios para GitHub Pages)
+*.php
+*.spec
+tiktok_music_bot*
+TikTokAppMusic.py
+voces.py
+
+# Carpetas de desarrollo
+build/
+MusicDownload/
+YouTubeDownloader/
+
+# Archivos de configuración local
+config.json
+tiktok_config.json
+setup_ngrok.bat
+tiktok_developers_guide.txt
+
+# Archivos temporales
+.vscode/
+node_modules/
+*.cache

@@ -1,0 +1,46 @@
+<!-- overlays/gift_alert.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      margin: 0;
+      background: transparent;
+      overflow: hidden;
+    }
+    #alert {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 40px;
+      font-family: sans-serif;
+      color: gold;
+      animation: pop 1s ease-out;
+    }
+    @keyframes pop {
+      0% { transform: scale(0); opacity: 0; }
+      50% { transform: scale(1.2); opacity: 1; }
+      100% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <div id="alert">🎁 ¡Gracias por tu regalo!</div>
+
+  <script>
+    // Puedes cambiar el texto dinámicamente si conectas WebSocket o URL params
+    const params = new URLSearchParams(window.location.search);
+    const name = params.get('name');
+    if (name) {
+      document.getElementById('alert').textContent = `🎁 ¡${name} envió un regalo!`;
+    }
+
+    // Desaparece después de 5 segundos
+    setTimeout(() => {
+      document.getElementById('alert').style.display = 'none';
+    }, 5000);
+  </script>
+</body>
+</html>

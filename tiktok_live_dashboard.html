@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TikTok Live Dashboard</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Arial', sans-serif;
+            color: white;
+            min-height: 100vh;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-value {
+            font-size: 3rem;
+            font-weight: bold;
+            margin: 10px 0;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .stat-label {
+            font-size: 1.2rem;
+            opacity: 0.8;
+        }
+
+        .comments-section {
+            grid-column: 1 / -1;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .comment {
+            background: rgba(255, 255, 255, 0.1);
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #ff0050;
+        }
+
+        .comment-user {
+            font-weight: bold;
+            color: #ff0050;
+        }
+
+        .comment-text {
+            margin-top: 5px;
+        }
+
+        .status {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .connected {
+            color: #00ff00;
+        }
+
+        .disconnected {
+            color: #ff4444;
+        }
+
+        .alert {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 0, 80, 0.9);
+            color: white;
+            padding: 20px 40px;
+            border-radius: 15px;
+            font-size: 2rem;
+            font-weight: bold;
+            text-align: center;
+            display: none;
+            z-index: 1000;
+            animation: alertPulse 0.5s ease-in-out;
+        }
+
+        @keyframes alertPulse {
+            0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+            50% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="status">
+        <h1>📱 TikTok Live Dashboard</h1>
+        <div id="connectionStatus" class="disconnected">🔴 Desconectado</div>
+    </div>
+
+    <div class="dashboard">
+        <div class="stat-card">
+            <div class="stat-value" id="viewersCount">0</div>
+            <div class="stat-label">👥 Espectadores</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-value" id="likesCount">0</div>
+            <div class="stat-label">❤️ Likes</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-value" id="followsCount">0</div>
+            <div class="stat-label">➕ Nuevos Seguidores</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-value" id="sharesCount">0</div>
+            <div class="stat-label">📤 Compartidos</div>
+        </div>
+
+        <div class="comments-section">
+            <h3>💬 Comentarios Recientes</h3>
+            <div id="commentsList">
+                <p>Esperando comentarios...</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="alertBox" class="alert"></div>
+
+    <script>
+        class TikTokLiveDashboard {
+            constructor() {
+                this.lastStats = {};
+                this.init();
+            }
+
+            init() {
+                this.updateStats();
+                setInterval(() => this.updateStats(), 2000); // Actualizar cada 2 segundos
+            }
+
+            async updateStats() {
+                try {
+                    // Cambiar la URL según tu configuración
+                    const response = await fetch('http://localhost:8080/');
+                    const stats = await response.json();
+                    
+                    this.updateUI(stats);
+                    this.checkAlerts(stats);
+                    this.lastStats = stats;
+                    
+                    document.getElementById('connectionStatus').textContent = '🟢 Conectado';
+                    document.getElementById('connectionStatus').className = 'connected';
+                } catch (error) {
+                    console.error('Error al obtener estadísticas:', error);
+                    document.getElementById('connectionStatus').textContent = '🔴 Desconectado';
+                    document.getElementById('connectionStatus').className = 'disconnected';
+                }
+            }
+
+            updateUI(stats) {
+                document.getElementById('viewersCount').textContent = stats.viewers || 0;
+                document.getElementById('likesCount').textContent = stats.likes || 0;
+                document.getElementById('followsCount').textContent = stats.follows || 0;
+                document.getElementById('sharesCount').textContent = stats.shares || 0;
+
+                // Actualizar comentarios
+                const commentsList = document.getElementById('commentsList');
+                if (stats.comments && stats.comments.length > 0) {
+                    commentsList.innerHTML = stats.comments.map(comment => `
+                        <div class="comment">
+                            <div class="comment-user">@${comment.user}</div>
+                            <div class="comment-text">${comment.comment}</div>
+                        </div>
+                    `).join('');
+                }
+            }
+
+            checkAlerts(stats) {
+                // Alerta para nuevos seguidores
+                if (this.lastStats.follows !== undefined && stats.follows > this.lastStats.follows) {
+                    this.showAlert(`🎉 ¡Nuevo seguidor! Total: ${stats.follows}`);
+                }
+
+                // Alerta para likes (cada 100 likes)
+                if (this.lastStats.likes !== undefined && 
+                    Math.floor(stats.likes / 100) > Math.floor(this.lastStats.likes / 100)) {
+                    this.showAlert(`❤️ ¡${stats.likes} likes alcanzados!`);
+                }
+            }
+
+            showAlert(message) {
+                const alertBox = document.getElementById('alertBox');
+                alertBox.textContent = message;
+                alertBox.style.display = 'block';
+
+                setTimeout(() => {
+                    alertBox.style.display = 'none';
+                }, 3000);
+            }
+        }
+
+        // Inicializar el dashboard
+        document.addEventListener('DOMContentLoaded', () => {
+            new TikTokLiveDashboard();
+        });
+    </script>
+</body>
+</html>
