@@ -5,9 +5,9 @@ const CONFIG = {
     
     // Usuario objetivo para obtener datos REALES
     TARGET_USER: {
-        username: 'derf2001', // ¡TU username de TikTok! (sin @)
-        display_name: 'Derf2001', // Tu nombre de pantalla
-        tiktok_id: 'derf2001' // Tu ID de TikTok
+        username: 'Jassy_gg', // Usuario real configurado
+        display_name: 'Jassy_gg',
+        tiktok_id: 'jassy_gg'
     },
     
     // APIs para datos reales
