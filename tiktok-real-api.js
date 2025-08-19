@@ -67,24 +67,49 @@ class TikTokRealAPI {
 
     // Fuente 2: APIs públicas de terceros
     async fetchFromPublicAPI(username) {
-        const apis = [
-            `https://tiktok-scraper7.p.rapidapi.com/user/info?unique_id=${username}`,
-            `https://tiktok-video-no-watermark2.p.rapidapi.com/user/info?unique_id=${username}`
-        ];
+        const apis = [];
+        
+        // Si tenemos RapidAPI key, usar APIs premium
+        if (this.config.REAL_API.RAPIDAPI_KEY && this.config.REAL_API.RAPIDAPI_KEY !== 'TU_RAPIDAPI_KEY_AQUI') {
+            apis.push({
+                url: `https://tiktok-scraper7.p.rapidapi.com/user/info?unique_id=${username}`,
+                headers: {
+                    'X-RapidAPI-Key': this.config.REAL_API.RAPIDAPI_KEY,
+                    'X-RapidAPI-Host': 'tiktok-scraper7.p.rapidapi.com'
+                }
+            });
+        }
+        
+        // APIs gratuitas como fallback
+        apis.push(
+            { url: `https://tiktok-scraper7.p.rapidapi.com/user/info?unique_id=${username}` },
+            { url: `https://tiktok-video-no-watermark2.p.rapidapi.com/user/info?unique_id=${username}` }
+        );
 
-        for (const apiUrl of apis) {
+        for (const api of apis) {
             try {
                 await this.respectRateLimit();
                 
-                const response = await fetch(this.corsProxy + encodeURIComponent(apiUrl));
+                const fetchOptions = {
+                    method: 'GET',
+                    headers: {
+                        ...this.config.REQUEST_HEADERS,
+                        ...api.headers
+                    }
+                };
+                
+                const response = await fetch(this.corsProxy + encodeURIComponent(api.url), fetchOptions);
                 const data = await response.json();
                 
-                if (data && data.data) {
-                    return {
-                        success: true,
-                        source: 'public_api',
-                        data: data.data
-                    };
+                if (data && (data.data || data.contents)) {
+                    const contents = data.contents ? JSON.parse(data.contents) : data;
+                    if (contents.data) {
+                        return {
+                            success: true,
+                            source: 'public_api_premium',
+                            data: contents.data
+                        };
+                    }
                 }
             } catch (error) {
                 console.warn('Public API failed:', error);
