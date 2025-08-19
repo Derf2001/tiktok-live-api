@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔥 Test TikTok Dashboard</title>
+    <style>
+        body {
+            margin: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            min-height: 100vh;
+        }
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .test-section {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            backdrop-filter: blur(10px);
+        }
+        .test-result {
+            background: rgba(76, 175, 80, 0.2);
+            border: 1px solid #4caf50;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+        .test-error {
+            background: rgba(244, 67, 54, 0.2);
+            border: 1px solid #f44336;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+        button {
+            background: #00f2ea;
+            border: none;
+            border-radius: 25px;
+            padding: 15px 30px;
+            color: #1a1a1a;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 242, 234, 0.4);
+        }
+        .logs {
+            background: #1a1a1a;
+            border-radius: 10px;
+            padding: 15px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 Test TikTok Dashboard Alternativo</h1>
+        
+        <div class="test-section">
+            <h3>📋 Pruebas de Configuración</h3>
+            <button onclick="testConfig()">Probar CONFIG</button>
+            <button onclick="testAPI()">Probar API</button>
+            <button onclick="testDashboard()">Probar Dashboard</button>
+            <div id="config-results"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>📊 Simulación de Datos</h3>
+            <button onclick="simulateUserData()">Simular Datos Usuario</button>
+            <button onclick="simulateLiveStats()">Simular Estadísticas Live</button>
+            <button onclick="simulateComments()">Simular Comentarios</button>
+            <div id="simulation-results"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>🔍 Logs del Sistema</h3>
+            <button onclick="clearLogs()">Limpiar Logs</button>
+            <div id="logs" class="logs"></div>
+        </div>
+    </div>
+
+    <script type="module">
+        import CONFIG from './config.js';
+        import TikTokAlternativeAPI from './tiktok-alternative-api.js';
+        
+        let api;
+        let logs = [];
+
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            logs.push({ timestamp, message, type });
+            updateLogsDisplay();
+        }
+
+        function updateLogsDisplay() {
+            const logsDiv = document.getElementById('logs');
+            logsDiv.innerHTML = logs.map(log => 
+                `<div style="color: ${log.type === 'error' ? '#f44336' : log.type === 'success' ? '#4caf50' : '#fff'}">
+                    [${log.timestamp}] ${log.message}
+                </div>`
+            ).join('');
+            logsDiv.scrollTop = logsDiv.scrollHeight;
+        }
+
+        window.testConfig = function() {
+            try {
+                log('Probando configuración...', 'info');
+                log(`Modo: ${CONFIG.MODE}`, 'info');
+                log(`Usuario objetivo: ${CONFIG.TARGET_USER.username}`, 'info');
+                log(`Intervalo de actualización: ${CONFIG.DASHBOARD.UPDATE_INTERVAL}ms`, 'info');
+                
+                const results = document.getElementById('config-results');
+                results.innerHTML = `
+                    <div class="test-result">
+                        ✅ Configuración cargada correctamente<br>
+                        📝 Modo: ${CONFIG.MODE}<br>
+                        👤 Usuario: ${CONFIG.TARGET_USER.username}<br>
+                        ⏱️ Actualización: ${CONFIG.DASHBOARD.UPDATE_INTERVAL}ms
+                    </div>
+                `;
+                log('Configuración OK', 'success');
+            } catch (error) {
+                log(`Error en configuración: ${error.message}`, 'error');
+                const results = document.getElementById('config-results');
+                results.innerHTML = `<div class="test-error">❌ Error: ${error.message}</div>`;
+            }
+        };
+
+        window.testAPI = function() {
+            try {
+                log('Inicializando API alternativa...', 'info');
+                api = new TikTokAlternativeAPI(CONFIG);
+                log('API inicializada correctamente', 'success');
+                
+                const results = document.getElementById('config-results');
+                results.innerHTML = `<div class="test-result">✅ API alternativa inicializada</div>`;
+            } catch (error) {
+                log(`Error al inicializar API: ${error.message}`, 'error');
+                const results = document.getElementById('config-results');
+                results.innerHTML = `<div class="test-error">❌ Error API: ${error.message}</div>`;
+            }
+        };
+
+        window.testDashboard = function() {
+            log('Probando componentes del dashboard...', 'info');
+            
+            // Test de formateo de números
+            const testNumbers = [50, 1500, 25000, 1200000];
+            testNumbers.forEach(num => {
+                log(`Formato ${num}: ${formatNumber(num)}`, 'info');
+            });
+            
+            // Test de tiempo
+            const now = Date.now();
+            const testTimes = [now, now - 60000, now - 3600000];
+            testTimes.forEach(time => {
+                log(`Tiempo ${time}: ${formatTime(time)}`, 'info');
+            });
+            
+            log('Tests de dashboard completados', 'success');
+        };
+
+        window.simulateUserData = async function() {
+            if (!api) {
+                log('API no inicializada. Ejecuta "Probar API" primero.', 'error');
+                return;
+            }
+            
+            try {
+                log('Obteniendo datos de usuario simulados...', 'info');
+                const userData = await api.getUserData(CONFIG.TARGET_USER.username);
+                
+                const results = document.getElementById('simulation-results');
+                results.innerHTML = `
+                    <div class="test-result">
+                        👤 <strong>${userData.display_name}</strong> (@${userData.username})<br>
+                        👥 Seguidores: ${formatNumber(userData.follower_count)}<br>
+                        ❤️ Likes: ${formatNumber(userData.likes_count)}<br>
+                        🎬 Videos: ${formatNumber(userData.video_count)}<br>
+                        ${userData.verified ? '✅ Verificado' : '❌ No verificado'}
+                    </div>
+                `;
+                
+                log(`Datos de usuario obtenidos: ${userData.display_name}`, 'success');
+            } catch (error) {
+                log(`Error obteniendo datos de usuario: ${error.message}`, 'error');
+            }
+        };
+
+        window.simulateLiveStats = function() {
+            if (!api) {
+                log('API no inicializada. Ejecuta "Probar API" primero.', 'error');
+                return;
+            }
+            
+            try {
+                log('Actualizando estadísticas de live...', 'info');
+                const stats = api.updateLiveStats();
+                
+                const results = document.getElementById('simulation-results');
+                results.innerHTML = `
+                    <div class="test-result">
+                        📺 Espectadores: ${stats.viewers}<br>
+                        ❤️ Likes: ${stats.likes}<br>
+                        ➕ Nuevos seguidores: ${stats.follows}<br>
+                        📤 Compartidos: ${stats.shares}<br>
+                        💬 Comentarios: ${stats.comments.length}
+                    </div>
+                `;
+                
+                log(`Stats actualizadas: ${stats.viewers} viewers, ${stats.likes} likes`, 'success');
+            } catch (error) {
+                log(`Error actualizando stats: ${error.message}`, 'error');
+            }
+        };
+
+        window.simulateComments = function() {
+            if (!api) {
+                log('API no inicializada. Ejecuta "Probar API" primero.', 'error');
+                return;
+            }
+            
+            try {
+                log('Generando comentarios simulados...', 'info');
+                const stats = api.updateLiveStats();
+                
+                const results = document.getElementById('simulation-results');
+                const commentsHtml = stats.comments.slice(0, 3).map(comment => `
+                    <div style="margin: 10px 0; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 8px;">
+                        <strong>@${comment.user}</strong><br>
+                        ${comment.text}<br>
+                        <small style="opacity: 0.7;">${formatTime(comment.timestamp)} - ❤️ ${comment.likes}</small>
+                    </div>
+                `).join('');
+                
+                results.innerHTML = `
+                    <div class="test-result">
+                        <strong>💬 Últimos comentarios:</strong><br>
+                        ${commentsHtml}
+                    </div>
+                `;
+                
+                log(`${stats.comments.length} comentarios generados`, 'success');
+            } catch (error) {
+                log(`Error generando comentarios: ${error.message}`, 'error');
+            }
+        };
+
+        window.clearLogs = function() {
+            logs = [];
+            updateLogsDisplay();
+        };
+
+        function formatNumber(num) {
+            if (num >= 1000000) {
+                return (num / 1000000).toFixed(1) + 'M';
+            } else if (num >= 1000) {
+                return (num / 1000).toFixed(1) + 'K';
+            }
+            return num.toString();
+        }
+
+        function formatTime(timestamp) {
+            const now = Date.now();
+            const diff = now - timestamp;
+            const seconds = Math.floor(diff / 1000);
+            
+            if (seconds < 60) return 'ahora';
+            if (seconds < 3600) return `${Math.floor(seconds / 60)}min`;
+            return `${Math.floor(seconds / 3600)}h`;
+        }
+
+        // Auto-log cuando cargue
+        document.addEventListener('DOMContentLoaded', () => {
+            log('🧪 Sistema de pruebas iniciado', 'success');
+            log('Ejecuta las pruebas usando los botones de arriba', 'info');
+        });
+    </script>
+</body>
+</html>
