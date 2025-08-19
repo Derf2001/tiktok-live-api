@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="tiktok-developers-site-verification" content="PChE3STxRJt0tnWHGwMdQRQqbGTOwrNB">
+    <title>🔴 TikTok Live Dashboard - SOLO DATOS REALES</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔴</text></svg>">
+    <style>
+        /* Estilos específicos para modo estricto */
+        .strict-mode-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(90deg, #ff4444, #cc0000);
+            color: white;
+            padding: 12px;
+            text-align: center;
+            font-weight: bold;
+            z-index: 9999;
+            box-shadow: 0 2px 20px rgba(255, 68, 68, 0.5);
+            animation: strictPulse 3s infinite;
+        }
+        
+        @keyframes strictPulse {
+            0%, 100% { background: linear-gradient(90deg, #ff4444, #cc0000); }
+            50% { background: linear-gradient(90deg, #cc0000, #ff4444); }
+        }
+        
+        .container {
+            margin-top: 60px; /* Espacio para el banner */
+        }
+        
+        .error-state {
+            animation: errorPulse 2s infinite;
+        }
+        
+        @keyframes errorPulse {
+            0%, 100% { border-color: #ff4444; }
+            50% { border-color: #ff8888; }
+        }
+        
+        .real-data-indicator {
+            animation: realDataPulse 2s infinite;
+        }
+        
+        @keyframes realDataPulse {
+            0%, 100% { opacity: 1; background: #ff4444; }
+            50% { opacity: 0.7; background: #cc0000; }
+        }
+        
+        /* Estilos para botones de error */
+        .retry-btn:hover, .error-details-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 68, 68, 0.4);
+        }
+        
+        /* Indicador de solo datos reales */
+        .stats-grid .stat-card::after {
+            content: '🔴';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 12px;
+            opacity: 0.7;
+        }
+        
+        /* Estilo para estado sin datos */
+        .no-fallback {
+            border: 2px dashed #ff4444;
+            background: rgba(255, 68, 68, 0.05);
+        }
+    </style>
+</head>
+<body>
+    <!-- Banner de modo estricto -->
+    <div class="strict-mode-banner">
+        🔴 MODO ESTRICTO: SOLO DATOS REALES - Sin fallback a simulación | Ctrl+R = Reintentar | Ctrl+E = Ver errores
+    </div>
+
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <h1>🔴 TikTok Live Dashboard</h1>
+                <p><strong>SOLO DATOS REALES</strong> - Sin simulación de respaldo</p>
+            </div>
+            <div class="auth-section">
+                <div id="auth-status" class="auth-status">
+                    <span id="status-text">🔍 Obteniendo datos reales...</span>
+                    <button id="auth-button" class="auth-button">🔍 Cargando datos reales...</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="dashboard">
+            <div class="stats-grid">
+                <div class="stat-card viewers">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="viewers-count">—</div>
+                        <div class="stat-label">Espectadores Reales</div>
+                    </div>
+                </div>
+
+                <div class="stat-card likes">
+                    <div class="stat-icon">❤️</div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="likes-count">—</div>
+                        <div class="stat-label">Likes Reales</div>
+                    </div>
+                </div>
+
+                <div class="stat-card follows">
+                    <div class="stat-icon">➕</div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="follows-count">—</div>
+                        <div class="stat-label">Seguidores Reales</div>
+                    </div>
+                </div>
+
+                <div class="stat-card shares">
+                    <div class="stat-icon">📤</div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="shares-count">—</div>
+                        <div class="stat-label">Compartidos Reales</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-grid">
+                <div class="comments-section">
+                    <h3>💬 Comentarios Reales en Tiempo Real</h3>
+                    <div id="comments-list" class="comments-list">
+                        <div class="no-data">Esperando datos reales de comentarios...</div>
+                    </div>
+                </div>
+
+                <div class="user-info-section">
+                    <h3>👤 Información Real del Usuario</h3>
+                    <div id="user-info" class="user-info">
+                        <div class="no-data">🔍 Obteniendo información real de TikTok...</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Alert overlay -->
+        <div id="alert-overlay" class="alert-overlay">
+            <div class="alert-content">
+                <div id="alert-text" class="alert-text"></div>
+            </div>
+        </div>
+
+        <!-- Loading overlay -->
+        <div id="loading-overlay" class="loading-overlay">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">🔍 Conectando con APIs reales de TikTok...</div>
+        </div>
+    </div>
+
+    <!-- Panel de información flotante -->
+    <div style="
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        background: rgba(255, 68, 68, 0.9);
+        color: white;
+        padding: 15px;
+        border-radius: 10px;
+        font-size: 0.8rem;
+        max-width: 320px;
+        backdrop-filter: blur(10px);
+        z-index: 1000;
+        border: 1px solid #ff6666;
+    ">
+        <strong>🔴 MODO ESTRICTO ACTIVADO</strong><br>
+        • Solo intentará obtener datos REALES<br>
+        • NO cambiará automáticamente a simulación<br>
+        • Mostrará errores detallados si falla<br>
+        • <kbd>Ctrl+R</kbd> = Reintentar datos reales<br>
+        • <kbd>Ctrl+E</kbd> = Ver errores detallados<br>
+        • Usuario: <strong>@Jassy_gg</strong>
+    </div>
+
+    <!-- Panel de estado -->
+    <div id="status-panel" style="
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 10px 15px;
+        border-radius: 8px;
+        font-size: 0.8rem;
+        backdrop-filter: blur(10px);
+        z-index: 1000;
+        border-left: 3px solid #ff4444;
+    ">
+        🔍 Buscando datos reales...
+    </div>
+
+    <script type="module" src="script-strict.js"></script>
+    
+    <script>
+        // Actualizar panel de estado dinámicamente
+        function updateStatusPanel(message, color = '#ff4444') {
+            const panel = document.getElementById('status-panel');
+            if (panel) {
+                panel.textContent = message;
+                panel.style.borderLeftColor = color;
+            }
+        }
+        
+        // Escuchar eventos del dashboard para actualizar estado
+        window.addEventListener('load', () => {
+            updateStatusPanel('🔍 Iniciando modo estricto...');
+        });
+        
+        // Actualizar cada pocos segundos
+        setInterval(() => {
+            const statusText = document.getElementById('status-text');
+            if (statusText) {
+                const text = statusText.textContent;
+                if (text.includes('Error')) {
+                    updateStatusPanel('❌ Error obteniendo datos reales', '#ff4444');
+                } else if (text.includes('EN VIVO')) {
+                    updateStatusPanel('🔴 Live real activo', '#00ff00');
+                } else if (text.includes('Listo')) {
+                    updateStatusPanel('✅ Datos reales obtenidos', '#00aa00');
+                } else {
+                    updateStatusPanel('🔍 Procesando...', '#ffaa00');
+                }
+            }
+        }, 2000);
+    </script>
+</body>
+</html>
