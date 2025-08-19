@@ -5,9 +5,9 @@ const CONFIG = {
     
     // Usuario objetivo para obtener datos REALES
     TARGET_USER: {
-        username: 'charlidamelio', // Usuario real popular para pruebas
-        display_name: 'Charli D\'Amelio',
-        tiktok_id: 'charlidamelio'
+        username: 'Jassy_gg', // Usuario real popular para pruebas
+        display_name: 'Jassy_gg',
+        tiktok_id: 'jassy_gg'
     },
     
     // APIs para datos reales
