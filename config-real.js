@@ -5,21 +5,28 @@ const CONFIG = {
     
     // Usuario objetivo para obtener datos REALES
     TARGET_USER: {
-        username: 'charlidamelio', // Usuario real popular para pruebas
-        display_name: 'Charli D\'Amelio',
-        tiktok_id: 'charlidamelio'
+        username: 'Jassy_gg', // Usuario real popular para pruebas
+        display_name: 'Jassy_gg',
+        tiktok_id: 'Jassy_gg'
     },
     
     // APIs para datos reales
     REAL_API: {
         // Claves de APIs externas (opcionales)
-        RAPIDAPI_KEY: null, // Agregar si tienes una key de RapidAPI
+        RAPIDAPI_KEY: '0ba5cdb6d7mshe298cee90a4ff9fp116182jsnf2c985f3466f', // Agregar si tienes una key de RapidAPI
         SCRAPER_API_KEY: null, // Para APIs de scraping premium
         
         // Endpoints para datos reales
         TIKTOK_SCRAPER: 'https://tiktok-scraper7.p.rapidapi.com',
         USER_INFO: 'https://tiktok-video-no-watermark2.p.rapidapi.com',
         LIVE_ROOM: 'https://tiktok-live-api.herokuapp.com',
+        
+        // ✅ AGREGAR ESTOS NUEVOS ENDPOINTS:
+        BACKUP_ENDPOINTS: [
+            'https://tiktok-video-feature-summary.p.rapidapi.com',
+            'https://tiktok-scraper-2022.p.rapidapi.com',
+            'https://tiktok.p.rapidapi.com'
+        ],
         
         // Configuración de rate limiting
         RATE_LIMIT_MS: 2000, // 2 segundos entre requests
